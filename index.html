@@ -20,22 +20,42 @@
 <div class="app">
   <header class="top">
     <div class="logo"><span class="plate">VR</span>ViaReady</div>
-    <div class="avatar" aria-label="Profiel van Sanne">SV</div>
+    <button class="avatar" id="avatar" aria-label="Account" aria-haspopup="true">SV</button>
   </header>
 
   <!-- VANDAAG -->
+  <!-- LOGIN -->
+  <section class="view" id="v-login" aria-label="Inloggen">
+    <div class="stack" style="gap:4px;padding-top:24px">
+      <h1>Inloggen bij ViaReady</h1>
+      <p class="muted">Je krijgt een code van 6 cijfers per e-mail. Geen wachtwoord nodig.</p>
+    </div>
+    <form class="card" id="emailForm" novalidate>
+      <label for="emailInput"><h3>E-mailadres</h3></label>
+      <input class="field" id="emailInput" type="email" inputmode="email" autocomplete="email" placeholder="naam@voorbeeld.nl" required>
+      <button class="btn" type="submit" id="emailBtn">Stuur code</button>
+    </form>
+    <form class="card" id="codeForm" novalidate hidden>
+      <label for="codeInput"><h3>Code uit je e-mail</h3></label>
+      <input class="field tabular" id="codeInput" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456" required>
+      <button class="btn" type="submit" id="codeBtn">Inloggen</button>
+      <button class="btn ghost" type="button" id="codeBack">Ander e-mailadres</button>
+    </form>
+    <p class="small" id="loginMsg" role="status"></p>
+  </section>
+
   <section class="view" id="v-vandaag" aria-label="Vandaag">
     <div>
-      <p class="muted">Hoi Sanne,</p>
-      <h1>Je volgende les is morgen</h1>
+      <p class="muted" id="hello">Hoi Sanne,</p>
+      <h1 id="homeH1">Je volgende les is morgen</h1>
     </div>
 
     <div class="card lesson">
       <div class="row between">
         <div class="stack" style="gap:4px">
-          <span class="tag" style="color:inherit;opacity:.75">Les 14 · morgen</span>
-          <h2>Rotondes &amp; rechts afslaan</h2>
-          <p class="muted small tabular">di 17 nov · 10:30–11:30 · met Mark</p>
+          <span class="tag" style="color:inherit;opacity:.75" id="lessonTag">Les 14 · morgen</span>
+          <h2 id="lessonTitle">Rotondes &amp; rechts afslaan</h2>
+          <p class="muted small tabular" id="lessonWhen">di 17 nov · 10:30–11:30 · met Mark</p>
         </div>
         <div class="ring" id="homeRing" style="--p:0"><span id="homeRingTxt" class="tabular">0/4</span></div>
       </div>
@@ -45,10 +65,10 @@
     <div class="card">
       <div class="row between">
         <h3>Klaar voor het examen</h3>
-        <span class="pill warn tabular">62%</span>
+        <span class="pill warn tabular" id="readyPill">62%</span>
       </div>
-      <div class="bar"><i style="width:62%"></i></div>
-      <p class="small muted">Rotondes en snelweg tellen nu het zwaarst mee. Na deze les verwacht je instructeur ±70%.</p>
+      <div class="bar"><i id="readyBar" style="width:62%"></i></div>
+      <p class="small muted" id="readyText">Rotondes en snelweg tellen nu het zwaarst mee.</p>
       <button class="btn ghost" data-go="voortgang">Bekijk voortgang</button>
     </div>
 
@@ -57,8 +77,8 @@
         <h3>Feedback vorige les</h3>
         <span class="pill accent">Nieuw</span>
       </div>
-      <p class="note">“Kijk eerder over je rechterschouder bij rechts afslaan. Fietsers zie je nu te laat.”</p>
-      <p class="small muted">Mark · les 13 · do 12 nov</p>
+      <p class="note" id="lastNote">“Kijk eerder over je rechterschouder bij rechts afslaan. Fietsers zie je nu te laat.”</p>
+      <p class="small muted" id="lastMeta">Mark · les 13 · do 12 nov</p>
       <button class="btn ghost" data-go="feedback">Bekijk alle feedback</button>
     </div>
   </section>
@@ -66,8 +86,8 @@
   <!-- VOORBEREIDING -->
   <section class="view" id="v-voorbereiding" aria-label="Lesvoorbereiding">
     <div class="stack" style="gap:4px">
-      <span class="tag">Lesvoorbereiding · les 14</span>
-      <h1>Rotondes &amp; rechts afslaan</h1>
+      <span class="tag" id="prepTag">Lesvoorbereiding · les 14</span>
+      <h1 id="prepTitle">Rotondes &amp; rechts afslaan</h1>
       <p class="muted small">Ongeveer 10 minuten. Je instructeur ziet wat je hebt gedaan.</p>
     </div>
 
@@ -76,7 +96,7 @@
       <div class="step" data-step="self">
         <button class="step-head" aria-expanded="false"><span class="check">1</span><span><h3>Hoe zeker voel je je?</h3><span class="small muted">Zelfbeoordeling</span></span><span class="chev">▾</span></button>
         <div class="step-body">
-          <p class="small">Hoe zeker voel je je op een rotonde met twee rijstroken?</p>
+          <p class="small" id="selfQ">Hoe zeker voel je je op een rotonde met twee rijstroken?</p>
           <div class="scale" role="group" aria-label="Zekerheid van 1 tot 5" id="scale">
             <button aria-pressed="false">1</button><button aria-pressed="false">2</button><button aria-pressed="false">3</button><button aria-pressed="false">4</button><button aria-pressed="false">5</button>
           </div>
@@ -87,13 +107,13 @@
 
       <!-- 2 video -->
       <div class="step" data-step="video">
-        <button class="step-head" aria-expanded="false"><span class="check">2</span><span><h3>Bekijk de uitleg</h3><span class="small muted">Video · 2:40</span></span><span class="chev">▾</span></button>
+        <button class="step-head" aria-expanded="false"><span class="check">2</span><span><h3>Bekijk de uitleg</h3><span class="small muted" id="videoSub">Video · 2:40</span></span><span class="chev">▾</span></button>
         <div class="step-body">
           <div class="video" role="img" aria-label="Video: zo neem je een rotonde">
             <div class="play"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#15203A"/></svg></div>
-            <span class="dur">2:40</span>
+            <span class="dur" id="videoDur">2:40</span>
           </div>
-          <p class="small">Inrijden, rijstrook kiezen, richting aangeven bij het verlaten en letten op fietsers.</p>
+          <p class="small" id="videoDesc">Inrijden, rijstrook kiezen, richting aangeven bij het verlaten en letten op fietsers.</p>
           <button class="btn ghost" id="videoDone">Ik heb de video bekeken</button>
         </div>
       </div>
@@ -138,7 +158,7 @@
 
     <div class="card" id="readyCard" hidden>
       <div class="row"><span class="pill good">Klaar</span><h3>Je bent voorbereid op les 14</h3></div>
-      <p class="small muted">Mark krijgt een seintje met je zelfbeoordeling en quizscore.</p>
+      <p class="small muted">Je instructeur ziet je zelfbeoordeling en quizscore.</p>
     </div>
     <button class="btn ghost" id="resetPrep">Voorbereiding opnieuw beginnen</button>
   </section>
@@ -147,31 +167,31 @@
   <section class="view" id="v-voortgang" aria-label="Voortgang">
     <div class="stack" style="gap:4px">
       <span class="tag">Voortgang</span>
-      <h1>62% klaar voor je praktijkexamen</h1>
-      <p class="muted small tabular">13 lessen gehad · examen gepland: februari</p>
+      <h1 id="progH1">62% klaar voor je praktijkexamen</h1>
+      <p class="muted small tabular" id="progSub">13 lessen gehad · examen gepland: februari</p>
     </div>
     <div class="card" id="skills"></div>
-    <p class="demo">Onderdelen gebaseerd op het CBR-praktijkexamen · voorbeeldgegevens</p>
+    <p class="demo">Onderdelen gebaseerd op het CBR-praktijkexamen</p>
   </section>
 
   <!-- FEEDBACK -->
   <section class="view" id="v-feedback" aria-label="Feedback na de les">
     <div class="stack" style="gap:4px">
-      <span class="tag">Na de les · les 13</span>
-      <h1>Kruispunten &amp; voorrang</h1>
-      <p class="muted small tabular">do 12 nov · Mark</p>
+      <span class="tag" id="fbTag">Na de les · les 13</span>
+      <h1 id="fbTitle">Kruispunten &amp; voorrang</h1>
+      <p class="muted small tabular" id="fbMeta">do 12 nov · Mark</p>
     </div>
     <div class="card">
       <h3>Beoordeling</h3>
       <div class="stack" id="rated"></div>
     </div>
     <div class="card">
-      <h3>Opmerking van Mark</h3>
-      <p class="note">“Kijk eerder over je rechterschouder bij rechts afslaan. Fietsers zie je nu te laat. Snelheid bij het naderen van kruispunten is al veel beter.”</p>
+      <h3>Opmerking van je instructeur</h3>
+      <p class="note" id="fbNote">“Kijk eerder over je rechterschouder bij rechts afslaan. Fietsers zie je nu te laat. Snelheid bij het naderen van kruispunten is al veel beter.”</p>
     </div>
     <div class="card">
       <h3>Hier ga je aan werken</h3>
-      <div class="spots">
+      <div class="spots" id="fbWork">
         <div class="spot"><span class="num">1</span><p class="small"><b>Schoudercontrole rechts.</b> Bekijk de video ‘Dode hoek bij rechts afslaan’ (1:50).</p></div>
         <div class="spot"><span class="num">2</span><p class="small"><b>Voorrang van rechts op gelijkwaardige kruispunten.</b> Oefen 10 theorievragen.</p></div>
       </div>
@@ -182,7 +202,18 @@
     </div>
   </section>
 
-  <p class="demo">Prototype · voorbeeldleerling en voorbeeldgegevens</p>
+  <p class="demo" id="demoNote">Demo · voorbeeldleerling en voorbeeldgegevens</p>
+
+  <!-- ACCOUNT -->
+  <section class="view" id="v-account" aria-label="Account">
+    <div class="stack" style="gap:4px">
+      <span class="tag">Account</span>
+      <h1 id="accName">Sanne</h1>
+      <p class="muted small" id="accEmail">Demo-modus</p>
+    </div>
+    <button class="btn ghost" id="logoutBtn">Uitloggen</button>
+    <button class="btn ghost" data-go="vandaag">Terug</button>
+  </section>
 </div>
 
 <nav class="tabs" aria-label="Hoofdmenu">
@@ -194,6 +225,8 @@
   </div>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

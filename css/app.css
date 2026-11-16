@@ -30,7 +30,7 @@ body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);-webkit-fon
 header.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0 8px}
 .logo{font:800 22px/1 var(--display);letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
 .logo .plate{background:var(--accent);color:var(--accent-ink);border-radius:6px;padding:3px 6px;font-size:14px}
-.avatar{width:36px;height:36px;border-radius:50%;background:var(--road);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:14px}
+.avatar{border:none;cursor:pointer;font-family:inherit;width:36px;height:36px;border-radius:50%;background:var(--road);color:var(--bg);display:grid;place-items:center;font-weight:700;font-size:14px}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
 h1{font-size:28px;line-height:1.15;font-weight:800}
 h2{font-size:20px;font-weight:600}
@@ -107,3 +107,7 @@ nav.tabs .inner{display:grid;grid-template-columns:repeat(4,1fr);width:100%;max-
 .tab[aria-current="page"]{color:var(--accent)}
 .demo{font-size:12px;color:var(--muted);text-align:center}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+.field{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;padding:13px 14px;font:500 17px var(--body)}
+.msg-bad{color:var(--bad)}.msg-good{color:var(--good)}
+.btn[disabled]{opacity:.6;cursor:default}
+body.login nav.tabs{display:none}
