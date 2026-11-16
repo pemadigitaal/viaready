@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ViaReady</title>
+<meta name="description" content="ViaReady: bereid je rijles voor, volg je voortgang en lees de feedback van je instructeur.">
+<meta name="theme-color" content="#15203A">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ViaReady">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="logo"><span class="plate">VR</span>ViaReady</div>
+    <div class="avatar" aria-label="Profiel van Sanne">SV</div>
+  </header>
+
+  <!-- VANDAAG -->
+  <section class="view" id="v-vandaag" aria-label="Vandaag">
+    <div>
+      <p class="muted">Hoi Sanne,</p>
+      <h1>Je volgende les is morgen</h1>
+    </div>
+
+    <div class="card lesson">
+      <div class="row between">
+        <div class="stack" style="gap:4px">
+          <span class="tag" style="color:inherit;opacity:.75">Les 14 · morgen</span>
+          <h2>Rotondes &amp; rechts afslaan</h2>
+          <p class="muted small tabular">di 17 nov · 10:30–11:30 · met Mark</p>
+        </div>
+        <div class="ring" id="homeRing" style="--p:0"><span id="homeRingTxt" class="tabular">0/4</span></div>
+      </div>
+      <button class="btn" data-go="voorbereiding">Start voorbereiding</button>
+    </div>
+
+    <div class="card">
+      <div class="row between">
+        <h3>Klaar voor het examen</h3>
+        <span class="pill warn tabular">62%</span>
+      </div>
+      <div class="bar"><i style="width:62%"></i></div>
+      <p class="small muted">Rotondes en snelweg tellen nu het zwaarst mee. Na deze les verwacht je instructeur ±70%.</p>
+      <button class="btn ghost" data-go="voortgang">Bekijk voortgang</button>
+    </div>
+
+    <div class="card">
+      <div class="row between">
+        <h3>Feedback vorige les</h3>
+        <span class="pill accent">Nieuw</span>
+      </div>
+      <p class="note">“Kijk eerder over je rechterschouder bij rechts afslaan. Fietsers zie je nu te laat.”</p>
+      <p class="small muted">Mark · les 13 · do 12 nov</p>
+      <button class="btn ghost" data-go="feedback">Bekijk alle feedback</button>
+    </div>
+  </section>
+
+  <!-- VOORBEREIDING -->
+  <section class="view" id="v-voorbereiding" aria-label="Lesvoorbereiding">
+    <div class="stack" style="gap:4px">
+      <span class="tag">Lesvoorbereiding · les 14</span>
+      <h1>Rotondes &amp; rechts afslaan</h1>
+      <p class="muted small">Ongeveer 10 minuten. Je instructeur ziet wat je hebt gedaan.</p>
+    </div>
+
+    <div class="stack" id="steps">
+      <!-- 1 zelfbeoordeling -->
+      <div class="step" data-step="self">
+        <button class="step-head" aria-expanded="false"><span class="check">1</span><span><h3>Hoe zeker voel je je?</h3><span class="small muted">Zelfbeoordeling</span></span><span class="chev">▾</span></button>
+        <div class="step-body">
+          <p class="small">Hoe zeker voel je je op een rotonde met twee rijstroken?</p>
+          <div class="scale" role="group" aria-label="Zekerheid van 1 tot 5" id="scale">
+            <button aria-pressed="false">1</button><button aria-pressed="false">2</button><button aria-pressed="false">3</button><button aria-pressed="false">4</button><button aria-pressed="false">5</button>
+          </div>
+          <div class="scale-labels"><span>Heel onzeker</span><span>Heel zeker</span></div>
+          <p class="small muted" id="selfMsg">Mark past de les aan op jouw antwoord.</p>
+        </div>
+      </div>
+
+      <!-- 2 video -->
+      <div class="step" data-step="video">
+        <button class="step-head" aria-expanded="false"><span class="check">2</span><span><h3>Bekijk de uitleg</h3><span class="small muted">Video · 2:40</span></span><span class="chev">▾</span></button>
+        <div class="step-body">
+          <div class="video" role="img" aria-label="Video: zo neem je een rotonde">
+            <div class="play"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#15203A"/></svg></div>
+            <span class="dur">2:40</span>
+          </div>
+          <p class="small">Inrijden, rijstrook kiezen, richting aangeven bij het verlaten en letten op fietsers.</p>
+          <button class="btn ghost" id="videoDone">Ik heb de video bekeken</button>
+        </div>
+      </div>
+
+      <!-- 3 quiz -->
+      <div class="step" data-step="quiz">
+        <button class="step-head" aria-expanded="false"><span class="check">3</span><span><h3>Snelle check</h3><span class="small muted" id="quizSub">4 vragen</span></span><span class="chev">▾</span></button>
+        <div class="step-body" id="quiz"></div>
+      </div>
+
+      <!-- 4 route -->
+      <div class="step" data-step="route">
+        <button class="step-head" aria-expanded="false"><span class="check">4</span><span><h3>Lastige punten op je route</h3><span class="small muted">3 punten · voorbeeldroute</span></span><span class="chev">▾</span></button>
+        <div class="step-body">
+          <div class="map">
+            <svg viewBox="0 0 320 190" role="img" aria-label="Schematische kaart met de route en drie lastige punten">
+              <rect width="320" height="190" fill="none"/>
+              <g stroke="var(--line)" stroke-width="10" fill="none" stroke-linecap="round">
+                <path d="M10 150 H310"/><path d="M90 10 V180"/><path d="M230 10 V180"/><path d="M10 60 H310"/>
+              </g>
+              <circle cx="90" cy="60" r="20" fill="none" stroke="var(--line)" stroke-width="10"/>
+              <path d="M20 150 H90 V80 A20 20 0 0 1 110 60 H230 V140" fill="none" stroke="var(--accent)" stroke-width="4" stroke-dasharray="1 0" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="20" cy="150" r="6" fill="var(--road)"/>
+              <g font-family="Figtree, sans-serif" font-weight="700" font-size="12" text-anchor="middle">
+                <circle cx="90" cy="60" r="11" fill="var(--accent)"/><text x="90" y="64" fill="var(--accent-ink)">1</text>
+                <circle cx="230" cy="60" r="11" fill="var(--accent)"/><text x="230" y="64" fill="var(--accent-ink)">2</text>
+                <circle cx="230" cy="140" r="11" fill="var(--accent)"/><text x="230" y="144" fill="var(--accent-ink)">3</text>
+              </g>
+              <text x="28" y="140" font-family="Figtree, sans-serif" font-size="11" fill="var(--muted)">Start: rijschool</text>
+            </svg>
+          </div>
+          <div class="spots">
+            <div class="spot"><span class="num">1</span><p class="small"><b>Dubbelstrooks rotonde.</b> Kies je rijstrook vóór de rotonde en volg de pijlen op het wegdek.</p></div>
+            <div class="spot"><span class="num">2</span><p class="small"><b>Rechts afslaan met vrijliggend fietspad.</b> Fietsers rechtdoor gaan voor. Spiegel én schouder.</p></div>
+            <div class="spot"><span class="num">3</span><p class="small"><b>Schoolzone 30 km/u.</b> Rond 8:15 en 14:30 veel overstekende kinderen.</p></div>
+          </div>
+          <p class="small muted">Lastige punten worden door instructeurs van jouw rijschool toegevoegd.</p>
+          <button class="btn ghost" id="routeDone">Route bekeken</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="readyCard" hidden>
+      <div class="row"><span class="pill good">Klaar</span><h3>Je bent voorbereid op les 14</h3></div>
+      <p class="small muted">Mark krijgt een seintje met je zelfbeoordeling en quizscore.</p>
+    </div>
+    <button class="btn ghost" id="resetPrep">Voorbereiding opnieuw beginnen</button>
+  </section>
+
+  <!-- VOORTGANG -->
+  <section class="view" id="v-voortgang" aria-label="Voortgang">
+    <div class="stack" style="gap:4px">
+      <span class="tag">Voortgang</span>
+      <h1>62% klaar voor je praktijkexamen</h1>
+      <p class="muted small tabular">13 lessen gehad · examen gepland: februari</p>
+    </div>
+    <div class="card" id="skills"></div>
+    <p class="demo">Onderdelen gebaseerd op het CBR-praktijkexamen · voorbeeldgegevens</p>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section class="view" id="v-feedback" aria-label="Feedback na de les">
+    <div class="stack" style="gap:4px">
+      <span class="tag">Na de les · les 13</span>
+      <h1>Kruispunten &amp; voorrang</h1>
+      <p class="muted small tabular">do 12 nov · Mark</p>
+    </div>
+    <div class="card">
+      <h3>Beoordeling</h3>
+      <div class="stack" id="rated"></div>
+    </div>
+    <div class="card">
+      <h3>Opmerking van Mark</h3>
+      <p class="note">“Kijk eerder over je rechterschouder bij rechts afslaan. Fietsers zie je nu te laat. Snelheid bij het naderen van kruispunten is al veel beter.”</p>
+    </div>
+    <div class="card">
+      <h3>Hier ga je aan werken</h3>
+      <div class="spots">
+        <div class="spot"><span class="num">1</span><p class="small"><b>Schoudercontrole rechts.</b> Bekijk de video ‘Dode hoek bij rechts afslaan’ (1:50).</p></div>
+        <div class="spot"><span class="num">2</span><p class="small"><b>Voorrang van rechts op gelijkwaardige kruispunten.</b> Oefen 10 theorievragen.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Thuis oefenen</h3>
+      <p class="small">Loop de route van les 14 in gedachten door: waar kijk je, wanneer geef je richting aan? Dat kost 3 minuten en scheelt in de auto.</p>
+    </div>
+  </section>
+
+  <p class="demo">Prototype · voorbeeldleerling en voorbeeldgegevens</p>
+</div>
+
+<nav class="tabs" aria-label="Hoofdmenu">
+  <div class="inner">
+    <button class="tab" data-go="vandaag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Vandaag</button>
+    <button class="tab" data-go="voorbereiding"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>Voorbereiden</button>
+    <button class="tab" data-go="voortgang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Voortgang</button>
+    <button class="tab" data-go="feedback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Feedback</button>
+  </div>
+</nav>
+
+<script src="js/app.js"></script>
+</body>
+</html>
